@@ -63,19 +63,46 @@ function createApple() {
 
 createApple(); 	
 
+let direction = 'right';
+
 function move() {
 	let snakeCoordinates = [snakeBody[0].getAttribute('data-posX'), snakeBody[0].getAttribute('data-posY')];
 	snakeBody[0].classList.remove('head');
 	snakeBody[snakeBody.length - 1].classList.remove('snakeBody');
 	snakeBody.pop();
 
-	if (snakeCoordinates[0] < 10) {
-		snakeBody.unshift(document.querySelector('[data-posX = "' + (+snakeCoordinates[0] + 1) + '"][data-posY = "' +
-		snakeCoordinates[1] + '"]'));
-	} else {
-		snakeBody.unshift(document.querySelector('[data-posX = "1"][data-posY = "' +
-		snakeCoordinates[1] + '"]'));
+	if (direction == 'right') {
+		if (snakeCoordinates[0] < 10) {
+			snakeBody.unshift(document.querySelector('[data-posX = "' + (+snakeCoordinates[0] + 1) + '"][data-posY = "' +
+			snakeCoordinates[1] + '"]'));
+		} else {
+			snakeBody.unshift(document.querySelector('[data-posX = "1"][data-posY = "' +
+			snakeCoordinates[1] + '"]'));
+		}
+	} else if (direction == 'left') {
+		if (snakeCoordinates[0] > 1) {
+			snakeBody.unshift(document.querySelector('[data-posX = "' + (+snakeCoordinates[0] - 1) + '"][data-posY = "' +
+			snakeCoordinates[1] + '"]'));
+		} else {
+			snakeBody.unshift(document.querySelector('[data-posX = "10"][data-posY = "' +
+			snakeCoordinates[1] + '"]'));
+		}
+	} else if (direction == 'up') {
+		if (snakeCoordinates[1] < 10) {
+			snakeBody.unshift(document.querySelector('[data-posX = "' + snakeCoordinates[0] + '"][data-posY = "' +
+			(+snakeCoordinates[1] + 1) + '"]'));
+		} else {
+			snakeBody.unshift(document.querySelector('[data-posX = "' + snakeCoordinates[0] + '"][data-posY = "1"]'));
+		}
+	} else if (direction == 'down') {
+		if (snakeCoordinates[1] > 1) {
+			snakeBody.unshift(document.querySelector('[data-posX = "' + snakeCoordinates[0] + '"][data-posY = "' +
+			(+snakeCoordinates[1] - 1) + '"]'));
+		} else {
+			snakeBody.unshift(document.querySelector('[data-posX = "' + snakeCoordinates[0] + '"][data-posY = "10"]'));
+		}
 	}
+	
 
 	snakeBody[0].classList.add('head');
 
@@ -85,4 +112,19 @@ function move() {
 }
 
 let interval = setInterval(move, 300); 
+
+window.addEventListener('keydown', function (event) {
+	if (event.keyCode == 37 && direction != 'right') {
+		direction = 'left';	
+	}
+	if (event.keyCode == 38 && direction != 'down') {
+		direction = 'up';	
+	}
+	if (event.keyCode == 39 && direction != 'left') {
+		direction = 'right';	
+	}
+	if (event.keyCode == 40 && direction != 'up') {
+		direction = 'down';	
+	}
+});
 //console.log(snakeBody);
