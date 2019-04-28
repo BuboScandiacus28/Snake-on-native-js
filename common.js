@@ -63,7 +63,15 @@ function createApple() {
 
 createApple(); 	
 
-let direction = 'right';
+let direction = 'right',
+		steps = false;
+
+let input = document.createElement('input');
+document.body.appendChild(input);
+input.classList.add('input');
+
+let score = 0;
+input.value = `Ваши очки: ${score}`;
 
 function move() {
 	let snakeCoordinates = [snakeBody[0].getAttribute('data-posX'), snakeBody[0].getAttribute('data-posY')];
@@ -103,28 +111,57 @@ function move() {
 		}
 	}
 	
+	if (snakeBody[0].getAttribute('data-posX') == apple.getAttribute('data-posX') && 
+	snakeBody[0].getAttribute('data-posY') == apple.getAttribute('data-posY')) {
+		apple.classList.remove('apple');
+		let px = snakeBody[snakeBody.length - 1].getAttribute('data-posX'),
+				py = snakeBody[snakeBody.length - 1].getAttribute('data-posY');
+
+		snakeBody.push(document.querySelector('[data-posX = "' + px + '"][data-posY = "' + py + '"]'));
+
+		createApple();
+
+		score++;
+		input.value = `Ваши очки: ${score}`;
+	}
+
+	if (snakeBody[0].classList.contains('snakeBody')) {
+		setTimeout(() => {
+			alert(`Игра окончена! Ваши очки: ${score}`);
+		}, 20)
+		clearInterval(interval);
+		document.body.style.background = 'red';
+	}
 
 	snakeBody[0].classList.add('head');
 
 	for (let i = 0; i < snakeBody.length; i++) {
 		snakeBody[i].classList.add('snakeBody');
 	}
+
+	steps = true;
 }
 
-let interval = setInterval(move, 300); 
+let interval = setInterval(move, 200); 
 
 window.addEventListener('keydown', function (event) {
-	if (event.keyCode == 37 && direction != 'right') {
-		direction = 'left';	
-	}
-	if (event.keyCode == 38 && direction != 'down') {
-		direction = 'up';	
-	}
-	if (event.keyCode == 39 && direction != 'left') {
-		direction = 'right';	
-	}
-	if (event.keyCode == 40 && direction != 'up') {
-		direction = 'down';	
+	if (steps == true) {
+		if (event.keyCode == 37 && direction != 'right') {
+			direction = 'left';	
+			steps = false;
+		}
+		if (event.keyCode == 38 && direction != 'down') {
+			direction = 'up';	
+			steps = false;
+		}
+		if (event.keyCode == 39 && direction != 'left') {
+			direction = 'right';
+			steps = false;
+		}
+		if (event.keyCode == 40 && direction != 'up') {
+			direction = 'down';	
+			steps = false;
+		}
 	}
 });
 //console.log(snakeBody);
