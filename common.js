@@ -142,7 +142,7 @@ function move() {
 	steps = true;
 }
 
-let interval = setInterval(move, 200); 
+var interval = setInterval(move, 200); 
 
 window.addEventListener('keydown', function (event) {
 	if (steps == true) {
@@ -162,6 +162,14 @@ window.addEventListener('keydown', function (event) {
 			direction = 'down';	
 			steps = false;
 		}
+	}
+	if (event.keyCode == 32) {
+		if (pause.classList.contains('active')) {
+			clearInterval(interval);
+		} else {
+			interval = setInterval(move, 200);
+		}
+		pause.classList.toggle('active');
 	}
 });
 //console.log(snakeBody);
