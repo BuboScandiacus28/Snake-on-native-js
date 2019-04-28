@@ -63,6 +63,7 @@ function createApple() {
 
 createApple(); 	
 
+let timerChecked = false;
 
 let direction = 'right',
 		steps = true;
@@ -197,6 +198,8 @@ window.addEventListener('keydown', function (event) {
 
 		pause.classList.add('active');
 
+		timerChecked = false;
+		
 		direction = 'right';
 
 		score = 0;
