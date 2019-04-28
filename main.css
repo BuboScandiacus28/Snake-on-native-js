@@ -30,3 +30,23 @@ body {
 	height: 50px;
 	padding: 5px;
 }
+
+.snakeBody {
+	background: url('img/snake-body.jpg');
+	-webkit-background-size: cover;
+	background-size: cover;
+	border-radius: 50%;
+}
+
+.head {
+	background: url('img/snake-head-3.png');
+	-webkit-background-size: cover;
+	background-size: cover;
+	border-radius: 10%;
+}
+
+.apple {
+	background: url('img/apple.png');
+	-webkit-background-size: cover;
+	background-size: cover;
+}
