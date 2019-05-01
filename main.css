@@ -49,16 +49,16 @@ body {
 			}
 
 			.head {
-				background: url('img/snake-head.png');
-				-webkit-background-size: cover;
-				background-size: cover;
+				background: url('img/snake-head.png') no-repeat;
+				-webkit-background-size: contain;
+				background-size: contain;
 				border-radius: 10%;
 			}
 
 			.apple {
-				background: url('img/apple.png');
-				-webkit-background-size: cover;
-				background-size: cover;
+				background: url('img/apple.png') no-repeat;
+				-webkit-background-size: contain;
+				background-size: contain;
 			}
 
 	#setting {
