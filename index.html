@@ -7,12 +7,26 @@
 	<link rel="stylesheet" href="main.css">
 </head>
 <body>
+  <!-- Экран паузы/конца игры -->
 	<div id = "pause" class = "active">
 		<div class = "pause-wrapper">
 			<div class = "bg"></div>
 			<p>pause</p>
 		</div>
 	</div>
+	<!-- Экран игры -->
+	<div id="game-container">
+		<div id="game"></div>
+		<div id = "setting">
+			<input class = "input" type="text" disabled>
+			<progress id = "progress" max = "9" value = "4"></progress>
+		</div>
+	</div>
+	<!-- Экран клавиш управления -->
+	<div id="keys">
+		<img src="img/keys.png" alt="">
+	</div>
+
 	<script src="common.js"></script>
 </body>
 </html>

@@ -8,7 +8,7 @@ for (let i = 0; i < 100; i++) {
 }
 
 //добавление поля в HTML
-document.body.appendChild(field);
+game.appendChild(field);
 
 // excel - ячейки поля
 // x и y координаты на поле x - строки, а y - столбцы
@@ -95,11 +95,7 @@ let direction = 'right',
 		steps = true;
 
 //input - переменная хранящая input
-let input = document.createElement('input');
-
-//добавление input на страницу и добавление ему класса .input
-document.body.appendChild(input);
-input.classList.add('input');
+let input = setting.getElementsByTagName('input')[0];
 
 //score - счетчик очков
 let score = 0;
@@ -109,6 +105,9 @@ input.value = `Ваши очки: ${score}`;
 
 //interval - переменная для таймера вызывающего функцию раз в n-е время 
 var interval;
+
+//speed - вычисление скорости змеи исходя из выбраного пользователем числа [0,9]
+let speed = 10 - progress.value;
 
 //функция движения змеи
 function move() {
@@ -222,12 +221,12 @@ function move() {
 //добавление элементов управления
 window.addEventListener('keydown', function (event) {
 	//если функция движения змеи закончила свое выполнение
-	if (steps == true) {
+	if ( (steps == true)&&(pause.classList.contains('active')) ) {
 		//если нажата стрелочка ← и змея не движется вправо (невозможность поворота на 180 градусов)
 		if (event.keyCode == 37 && direction != 'right') {
 			//если игра еще не начата, то начать ее 
 			if (timerChecked == false) {
-				interval = setInterval(move, 200);
+				interval = setInterval(move, 50 * speed);
 				timerChecked = true;
 			}
 			//изменение направление на лево
@@ -239,7 +238,7 @@ window.addEventListener('keydown', function (event) {
 		if (event.keyCode == 38 && direction != 'down') {
 			//если игра еще не начата, то начать ее 
 			if (timerChecked == false) {
-				interval = setInterval(move, 200);
+				interval = setInterval(move, 50 * speed);
 				timerChecked = true;
 			}
 			//изменение направление на верх
@@ -251,7 +250,7 @@ window.addEventListener('keydown', function (event) {
 		if (event.keyCode == 39 && direction != 'left') {
 			//если игра еще не начата, то начать ее 
 			if (timerChecked == false) {
-				interval = setInterval(move, 200);
+				interval = setInterval(move, 50 * speed);
 				timerChecked = true;
 			}
 			//изменение направление на право
@@ -263,7 +262,7 @@ window.addEventListener('keydown', function (event) {
 		if (event.keyCode == 40 && direction != 'up') {
 			//если игра еще не начата, то начать ее 
 			if (timerChecked == false) {
-				interval = setInterval(move, 200);
+				interval = setInterval(move, 50 * speed);
 				timerChecked = true;
 			}
 			//изменение направление на низ
@@ -283,7 +282,7 @@ window.addEventListener('keydown', function (event) {
 				pause.getElementsByClassName('bg')[0].style.background = 'black';
 			} else {
 				//иначе продолжить игру
-				interval = setInterval(move, 200);
+				interval = setInterval(move, 50 * speed);
 			}
 			//вызов или закрытие экрана паузы
 			pause.classList.toggle('active');
@@ -336,6 +335,29 @@ window.addEventListener('keydown', function (event) {
 
 		//генерация новой ячейки с яблоком
 		createApple();
+	}
+	//если экран паузы не вызван
+	if (pause.classList.contains('active')) {
+		//если нажата Q, то уменьшить скорость змеи
+		if (event.keyCode == 81) {
+			speed++;
+			if (speed > 10) speed = 10;
+		}
+		//если нажата E, то увеличить скорость змеи
+		if (event.keyCode == 69) {
+			speed--;
+			if (speed < 1) speed = 1;
+		}
+		//если нажата E или Q
+		if ( (event.keyCode == 69)||(event.keyCode == 81) ) {
+			//занесение нового значения в прогресс бар
+			progress.value = 10 - speed;
+			//если игра идет
+			if (timerChecked != false) {
+				clearInterval(interval);
+				interval = setInterval(move, 50 * speed);
+			}
+		}
 	}
 });
 //console.log(snakeBody);
