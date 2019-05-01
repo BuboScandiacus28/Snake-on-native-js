@@ -173,8 +173,7 @@ function move() {
 	}
 	
 	//если змея "съела" яблоко (координаты головы змеи и яблока совпадают)
-	if (snakeBody[0].getAttribute('data-posX') == apple.getAttribute('data-posX') && 
-	snakeBody[0].getAttribute('data-posY') == apple.getAttribute('data-posY')) {
+	if (snakeBody[0].classList.contains('apple')) {
 		//удаление у ячейки в которой находится яблоко класа .apple
 		apple.classList.remove('apple');
 
@@ -209,10 +208,8 @@ function move() {
 	//добавление перемещенному первому элементу тела змеи класса .head
 	snakeBody[0].classList.add('head');
 
-	//добавление всем ячейкам тела змеи класса .snakeBody
-	for (let i = 0; i < snakeBody.length; i++) {
-		snakeBody[i].classList.add('snakeBody');
-	}
+	//добавление всем новым ячейкам тела змеи класса .snakeBody
+		snakeBody[0].classList.add('snakeBody');
 
 	//true - перемещение змеи закончено
 	steps = true;
